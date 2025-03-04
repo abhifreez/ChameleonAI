@@ -1,0 +1,6 @@
+flask
+openai
+transformers
+torch
+sentencepiece
+python-dotenv
