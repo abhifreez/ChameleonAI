@@ -3,6 +3,12 @@ import torch
 from models.base_model import BaseLLM
 import os
 import re
+from dotenv import load_dotenv
+
+
+load_dotenv()
+
+model_path=os.getenv("LOCAL_MODEL_DEEPSEEK")
 
 def extract_response(message):
     content = message.get("content", "")
@@ -19,7 +25,8 @@ class DeepSeek(BaseLLM):
     def __init__(self):
         
 
-        MODEL_PATH = "/Users/abhinavagarwal/Documents/Models/lmstudio-community/DeepSeek-R1-Distill-Qwen-7B-GGUF/DeepSeek-R1-Distill-Qwen-7B-Q4_K_M.gguf"
+        #MODEL_PATH = "/Users/abhinavagarwal/Documents/Models/lmstudio-community/DeepSeek-R1-Distill-Qwen-7B-GGUF/DeepSeek-R1-Distill-Qwen-7B-Q4_K_M.gguf"
+        MODEL_PATH = model_path
 
         if not os.path.exists(MODEL_PATH):
             raise FileNotFoundError(f"Model file not found at {MODEL_PATH}")
