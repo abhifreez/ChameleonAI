@@ -12,3 +12,13 @@ class BaseLLM(ABC):
     @abstractmethod
     def generate_response(self, system_prompt, user_prompt):
         pass
+
+
+class BaseEmbedding(ABC):
+    """
+    Abstract Base Class for Embedding Models.
+    """
+
+    @abstractmethod
+    def generate_embedding(self, text):
+        pass

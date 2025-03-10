@@ -75,6 +75,30 @@ def generate_text():
         "response": response_text
     })
 
+@app.route("/embedding", methods=["POST"])
+def generate_embedding():
+    api_key = request.headers.get("X-API-Key")
+    if not api_key or not verify_api_key(api_key):
+        return jsonify({"error": "Invalid or missing API key"}), 403
+    data = request.json
+    model_name = data.get("model_name")
+    user_prompt = data.get("user_prompt")
+
+    if not model_name or not user_prompt:
+        return jsonify({"error": "Missing model_name or user_prompt"}), 400
+
+    model = ModelFactory.get_model(model_name)
+    if not model:
+        return jsonify({"error": "Invalid model name"}), 400
+
+    response_text = model.generate_embedding(user_prompt)
+    
+    return jsonify({
+        "model": model_name,
+        "response": response_text
+    })
+
+
 @app.route("/reviewpr", methods=["POST"])
 def review_pr():
     #a = json_to_dict("```json\n{\n  \"reviews\": [\n    {\n      \"lineNumber\": 99,\n      \"reviewComment\": \"The code incorrectly accesses `paid_status` instead of `payment_status_total_due` in the condition. This may lead to incorrect totals for overduing and outstanding amounts.\"\n    },\n    {\n      \"lineNumber\": 100,\n      \"reviewComment\": \"The code incorrectly accesses `paid_status` instead of `payment_status_total_due` in the condition. This may lead to incorrect totals for overduing and outstanding amounts.\"\n    }\n  ]\n}\n```")
