@@ -33,9 +33,11 @@ class DeepSeek(BaseLLM):
 
         self.model= Llama(
             model_path=MODEL_PATH,
-            n_gpu_layers=100,  # Utilize GPU for better performance (Mac Metal supported)
+            n_gpu_layers=80,  # Utilize GPU for better performance (Mac Metal supported)
             n_ctx=2048,  # Context window size
-            n_threads=6  # Optimize for Apple M1/M2/M3 CPU threads
+            n_threads=8,  # Optimize for Apple M1/M2/M3 CPU threads
+            n_batch = 1024,
+            use_mlock = True
         )
 
     def format_prompt(self, system_prompt, user_prompt):

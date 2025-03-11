@@ -4,12 +4,17 @@ from dotenv import load_dotenv
 import os
 import json
 import re
+
 # Load environment variables from .env file
 load_dotenv()
+
+
 
 app = Flask(__name__)
 
 API_KEY = os.getenv("API_KEY")
+
+ds_local_model = ModelFactory().get_model("deepseek")
 
 def verify_api_key(api_key):
     """Check if the provided API key is valid."""
@@ -109,17 +114,21 @@ def review_pr():
         return jsonify({"error": "Invalid or missing API key"}), 403
     data = request.json
     model_name = "deepseek"
+   
+    
     system_prompt = load_system_prompt("system_prompts/review_prompt.txt")
     user_prompt =  data.get("user_prompt")
 
     if not model_name or not user_prompt:
         return jsonify({"error": "Missing model_name or user_prompt"}), 400
-
-    model = ModelFactory.get_model(model_name)
+    
+    if(model_name == "deepseek"):
+        model = ds_local_model
+    else:
+        model = ModelFactory.get_model(model_name)
     if not model:
         return jsonify({"error": "Invalid model name"}), 400
-    
-    
+  
     response_text = json_to_dict(model.generate_response(system_prompt, user_prompt))
     #response_text_2 = gpt_model.generate_response("Generate a valid JSON file that an Ava test script can parse.", response_text)
     
