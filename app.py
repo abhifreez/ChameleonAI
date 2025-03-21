@@ -1,9 +1,10 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 from factory import ModelFactory
 from dotenv import load_dotenv
 import os
 import json
 import re
+from content_generator import ContentGenerator
 
 # Load environment variables from .env file
 load_dotenv()
@@ -137,6 +138,75 @@ def review_pr():
         "response": response_text
     })
 
+@app.route("/download/<path:filename>")
+def download_file(filename):
+    """Download a generated file."""
+    try:
+        directory = "generated_content"
+        return send_file(
+            os.path.join(directory, filename),
+            as_attachment=True,
+            download_name=filename
+        )
+    except Exception as e:
+        return jsonify({"error": f"File not found: {str(e)}"}), 404
+
+@app.route("/generate-lecture", methods=["POST"])
+def generate_lecture_content():
+    api_key = request.headers.get("X-API-Key")
+    if not api_key or not verify_api_key(api_key):
+        return jsonify({"error": "Invalid or missing API key"}), 403
+        
+    data = request.json
+    lecture_title = data.get("lecture_title")
+    topics = data.get("topics", [])
+    
+    # Get model preferences with defaults
+    structure_model = data.get("structure_model", "gemini-2.0-flash")
+    presentation_model = data.get("presentation_model", "gemini-2.0-flash")
+    notes_model = data.get("notes_model", "gemini-2.0-flash")
+    
+    if not lecture_title or not topics:
+        return jsonify({"error": "Missing lecture_title or topics"}), 400
+        
+    try:
+        generator = ContentGenerator(
+            structure_model=structure_model,
+            presentation_model=presentation_model,
+            notes_model=notes_model
+        )
+        ppt_structure, lecture_details_file, notes_file = generator.generate_content(lecture_title, topics)
+        
+        # Extract just the filenames from the full paths
+        lecture_details_filename = os.path.basename(lecture_details_file)
+        notes_filename = os.path.basename(notes_file)
+        
+        return jsonify({
+            "status": "success",
+            "presentation_structure": ppt_structure,
+            "notes_file": {
+                "filename": notes_filename,
+                "download_url": f"/download/{notes_filename}"
+            },
+            "lecture_details_file": {
+                "filename": lecture_details_filename,
+                "download_url": f"/download/{lecture_details_filename}"
+            },
+            "models_used": {
+                "structure": structure_model,
+                "presentation": presentation_model,
+                "notes": notes_model
+            }
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route("/available-models", methods=["GET"])
+def get_available_models():
+    """Endpoint to get list of available models"""
+    return jsonify({
+        "models": ContentGenerator.available_models()
+    })
 
 if __name__ == "__main__":
     app.run(debug=True)

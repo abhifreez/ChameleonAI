@@ -1,0 +1,15 @@
+Create a presentation from the input provide by the user make sure to use the following slide types, the output should be in json format as mentioned below.
+
+REQUIRED SLIDE TYPES TO USE:
+- COVER_SLIDE: For the title slide
+- QUESTION_SLIDE: For interactive questions and ice breakers 
+- LC_RI_SLIDE: Left Content, Right Image slide format
+- RC_LI_SLIDE: Right Content, Left Image slide format
+- CONTENT_SLIDE: Text-only slides
+- THANK_YOU_SLIDE: For the final slide
+
+Instructions:
+- QUESTION_SLIDE should only have subheading no title, heading or content.
+
+Output Format:
+{"slides":[{"type":"<slide type from above options>","heading":"","sub_heading":"",content":["Content points as array items"],"image":"<Image link form the internet>"}]}

@@ -1,0 +1,295 @@
+- {'name': 'Introduction to Functions', 'subtopics': [{'name': 'What is a Function?', 'subsubtopics': [{'name': 'Definition: A block of organized, reusable code that performs a specific task.'}]}, {'name': 'Why Use Functions?', 'subsubtopics': [{'name': 'Modularity: Break down complex problems into smaller, manageable parts.'}, {'name': 'Reusability: Write code once, use it multiple times.'}, {'name': 'Readability: Makes code easier to understand and maintain.'}]}, {'name': 'Types of Functions', 'subsubtopics': [{'name': 'Built-in Functions: Functions that are pre-defined in Python (e.g., `print()`, `len()`, `type()`)'}, {'name': 'User-Defined Functions: Functions created by the programmer to perform specific tasks.'}]}, {'name': 'Function Definition Syntax', 'subsubtopics': [{'name': 'Explanation of `def`, function name rules, parameters, docstrings, and the `return` statement.'}]}]}
+- {'name': 'Function Arguments and Parameters', 'subtopics': [{'name': 'Positional Arguments', 'subsubtopics': [{'name': 'Arguments are passed to the function in the order they are defined.'}]}, {'name': 'Keyword Arguments', 'subsubtopics': [{'name': 'Arguments are passed with the parameter name explicitly specified. This allows you to pass arguments in any order.'}]}, {'name': 'Default Argument Values', 'subsubtopics': [{'name': 'You can assign default values to parameters in the function definition. If an argument is not provided for that parameter when the function is called, the default value is used.'}]}, {'name': 'Arbitrary Arguments (*args)', 'subsubtopics': [{'name': "Used when you don't know in advance how many arguments will be passed to the function. These arguments are collected into a tuple."}]}, {'name': 'Arbitrary Keyword Arguments (**kwargs)', 'subsubtopics': [{'name': 'Similar to `*args`, but for keyword arguments. These arguments are collected into a dictionary.'}]}]}
+- {'name': 'Return Values and Scope', 'subtopics': [{'name': 'The `return` Statement', 'subsubtopics': [{'name': 'Exits the function and optionally returns a value.'}, {'name': 'If no `return` statement is present, the function returns `None`.'}]}, {'name': 'Returning Multiple Values', 'subsubtopics': [{'name': 'Python allows you to return multiple values from a function as a tuple.'}]}, {'name': 'Variable Scope', 'subsubtopics': [{'name': 'Local Scope: Variables defined inside a function are only accessible within that function.'}, {'name': 'Global Scope: Variables defined outside of any function are accessible throughout the entire program.'}, {'name': 'LEGB Rule: Python uses the LEGB rule to determine the order in which it searches for variables: Local, Enclosing function locals, Global, Built-in.'}]}]}
+- {'name': 'Lambda Functions (Anonymous Functions)', 'subtopics': [{'name': 'Syntax', 'subsubtopics': [{'name': '`lambda arguments: expression`'}]}, {'name': 'Use Cases', 'subsubtopics': [{'name': 'Often used with functions like `map()`, `filter()`, and `sorted()`.'}]}]}
+
+## {'name': 'Introduction to Functions', 'subtopics': [{'name': 'What is a Function?', 'subsubtopics': [{'name': 'Definition: A block of organized, reusable code that performs a specific task.'}]}, {'name': 'Why Use Functions?', 'subsubtopics': [{'name': 'Modularity: Break down complex problems into smaller, manageable parts.'}, {'name': 'Reusability: Write code once, use it multiple times.'}, {'name': 'Readability: Makes code easier to understand and maintain.'}]}, {'name': 'Types of Functions', 'subsubtopics': [{'name': 'Built-in Functions: Functions that are pre-defined in Python (e.g., `print()`, `len()`, `type()`)'}, {'name': 'User-Defined Functions: Functions created by the programmer to perform specific tasks.'}]}, {'name': 'Function Definition Syntax', 'subsubtopics': [{'name': 'Explanation of `def`, function name rules, parameters, docstrings, and the `return` statement.'}]}]}
+
+## Introduction to Functions - Notes
+
+**I. What is a Function?**
+
+*   **Definition:** A block of organized, reusable code that performs a specific task.
+    *   Think of it as a mini-program within a larger program.
+    *   Encapsulates a specific action or computation.
+
+**II. Why Use Functions?**
+
+*   **Modularity:**
+    *   Break down complex problems into smaller, manageable parts.
+    *   Easier to debug and test individual function components.
+    *   Divide and conquer approach to software development.
+*   **Reusability:**
+    *   Write code once, use it multiple times.
+    *   Avoid redundant code, saving time and reducing errors.
+    *   Call the function with different inputs for different results.
+*   **Readability:**
+    *   Makes code easier to understand and maintain.
+    *   Functions with descriptive names clearly indicate their purpose.
+    *   Improved code organization.
+    *   Allows for abstraction - hiding complex logic behind a simple function call.
+
+**III. Types of Functions**
+
+*   **Built-in Functions:**
+    *   Functions that are pre-defined in Python.
+    *   Examples:
+        *   `print()`:  Displays output to the console.
+        *   `len()`: Returns the length of a sequence (string, list, tuple, etc.).
+        *   `type()`: Returns the data type of a variable or value.
+    *   No need to define; they are readily available.
+*   **User-Defined Functions:**
+    *   Functions created by the programmer to perform specific tasks.
+    *   Allows for customization and extension of Python's capabilities.
+    *   Defined using the `def` keyword.
+
+**IV. Function Definition Syntax**
+
+*   **`def` Keyword:**
+    *   Starts the function definition.
+    *   Indicates that you are defining a new function.
+    *   Syntax: `def function_name(parameters):`
+*   **Function Name Rules:**
+    *   Should be descriptive and indicate the function's purpose.
+    *   Follow standard Python naming conventions (snake_case: lowercase with words separated by underscores).
+    *   Cannot start with a number.
+    *   Cannot be a reserved keyword (e.g., `def`, `if`, `else`, `for`).
+*   **Parameters (Arguments):**
+    *   Values passed into the function when it is called.
+    *   Optional: A function can have zero or more parameters.
+    *   Parameters are enclosed in parentheses after the function name.
+    *   Multiple parameters are separated by commas.
+*   **Docstrings:**
+    *   Optional but *highly recommended*.
+    *   A multi-line string (using triple quotes `"""Docstring goes here"""`) that describes what the function does, its parameters, and what it returns.
+    *   Used for documentation and can be accessed using `help(function_name)`.
+*   **`return` Statement:**
+    *   Specifies the value that the function returns to the caller.
+    *   Optional: A function does not necessarily need to return a value. If no return statement is present, the function implicitly returns `None`.
+    *   `return` statement ends the function's execution. Any code after the `return` statement (within the same block) will not be executed.
+    *   Can return multiple values as a tuple (e.g., `return x, y, z`).
+
+
+## {'name': 'Function Arguments and Parameters', 'subtopics': [{'name': 'Positional Arguments', 'subsubtopics': [{'name': 'Arguments are passed to the function in the order they are defined.'}]}, {'name': 'Keyword Arguments', 'subsubtopics': [{'name': 'Arguments are passed with the parameter name explicitly specified. This allows you to pass arguments in any order.'}]}, {'name': 'Default Argument Values', 'subsubtopics': [{'name': 'You can assign default values to parameters in the function definition. If an argument is not provided for that parameter when the function is called, the default value is used.'}]}, {'name': 'Arbitrary Arguments (*args)', 'subsubtopics': [{'name': "Used when you don't know in advance how many arguments will be passed to the function. These arguments are collected into a tuple."}]}, {'name': 'Arbitrary Keyword Arguments (**kwargs)', 'subsubtopics': [{'name': 'Similar to `*args`, but for keyword arguments. These arguments are collected into a dictionary.'}]}]}
+
+## Function Arguments and Parameters - Notes
+
+**I. Introduction**
+
+*   Functions use arguments and parameters to receive data and customize their behavior.
+*   Parameters are the variables defined in the function definition's parentheses.
+*   Arguments are the actual values passed to the function when it's called.
+
+**II. Positional Arguments**
+
+*   **Definition:** Arguments are passed to the function based on their position (order) in the function call.
+*   **Key Feature:** Order matters!
+*   **Subtopic:**
+    *   Arguments are passed to the function in the order they are defined.
+    *   The first argument corresponds to the first parameter, the second to the second, and so on.
+    *   Example:
+        ```python
+        def greet(name, greeting):
+            print(greeting + ", " + name + "!")
+
+        greet("Alice", "Hello")  # Output: Hello, Alice!
+        greet("Hello", "Alice")  # Output: Alice, Hello! (Incorrect, order is wrong)
+        ```
+
+**III. Keyword Arguments**
+
+*   **Definition:** Arguments are passed to the function with the parameter name explicitly specified using `parameter_name=value`.
+*   **Key Feature:** Order doesn't matter (as long as all required parameters are given a value).  Improves readability.
+*   **Subtopic:**
+    *   Arguments are passed with the parameter name explicitly specified. This allows you to pass arguments in any order.
+    *   Example:
+        ```python
+        def greet(name, greeting):
+            print(greeting + ", " + name + "!")
+
+        greet(name="Bob", greeting="Hi")  # Output: Hi, Bob!
+        greet(greeting="Hi", name="Bob")  # Output: Hi, Bob! (Order doesn't matter)
+        ```
+*   **Note:**  You can combine positional and keyword arguments, but positional arguments must come before keyword arguments.
+
+**IV. Default Argument Values**
+
+*   **Definition:**  Parameters in the function definition can be assigned default values.
+*   **Key Feature:** If an argument isn't provided for that parameter during the function call, the default value is used.
+*   **Subtopic:**
+    *   You can assign default values to parameters in the function definition. If an argument is not provided for that parameter when the function is called, the default value is used.
+    *   Example:
+        ```python
+        def greet(name, greeting="Hello"):
+            print(greeting + ", " + name + "!")
+
+        greet("Charlie")       # Output: Hello, Charlie! (uses default greeting)
+        greet("David", "Hey")   # Output: Hey, David! (overrides default greeting)
+        ```
+*   **Note:** Parameters with default values should be defined *after* parameters without default values in the function definition.
+
+**V. Arbitrary Arguments (*args)**
+
+*   **Definition:** Allows a function to accept a variable number of positional arguments.
+*   **Key Feature:**  Collects the extra positional arguments into a tuple.
+*   **Subtopic:**
+    *   Used when you don't know in advance how many arguments will be passed to the function. These arguments are collected into a tuple.
+    *   The `*args` parameter is conventionally named `args`, but any valid variable name preceded by `*` will work.
+    *   Example:
+        ```python
+        def my_sum(*args):
+            total = 0
+            for num in args:
+                total += num
+            return total
+
+        print(my_sum(1, 2, 3))      # Output: 6
+        print(my_sum(1, 2, 3, 4, 5))  # Output: 15
+        print(my_sum())              # Output: 0 (args is an empty tuple)
+        ```
+
+**VI. Arbitrary Keyword Arguments (**kwargs)**
+
+*   **Definition:** Allows a function to accept a variable number of keyword arguments.
+*   **Key Feature:** Collects the extra keyword arguments into a dictionary.
+*   **Subtopic:**
+    *   Similar to `*args`, but for keyword arguments. These arguments are collected into a dictionary.
+    *   The `**kwargs` parameter is conventionally named `kwargs`, but any valid variable name preceded by `**` will work.
+    *   Example:
+        ```python
+        def describe_person(**kwargs):
+            for key, value in kwargs.items():
+                print(key + ": " + str(value))
+
+        describe_person(name="Eve", age=30, city="London")
+        # Output:
+        # name: Eve
+        # age: 30
+        # city: London
+        ```
+
+**VII.  Argument Ordering Summary**
+
+When defining a function, the order of parameters matters:
+
+1.  Regular positional arguments (no default values)
+2.  Positional arguments with default values
+3.  `*args` (arbitrary positional arguments)
+4.  `**kwargs` (arbitrary keyword arguments)
+
+When calling a function, remember:
+
+1.  Positional arguments must precede keyword arguments.
+
+
+## {'name': 'Return Values and Scope', 'subtopics': [{'name': 'The `return` Statement', 'subsubtopics': [{'name': 'Exits the function and optionally returns a value.'}, {'name': 'If no `return` statement is present, the function returns `None`.'}]}, {'name': 'Returning Multiple Values', 'subsubtopics': [{'name': 'Python allows you to return multiple values from a function as a tuple.'}]}, {'name': 'Variable Scope', 'subsubtopics': [{'name': 'Local Scope: Variables defined inside a function are only accessible within that function.'}, {'name': 'Global Scope: Variables defined outside of any function are accessible throughout the entire program.'}, {'name': 'LEGB Rule: Python uses the LEGB rule to determine the order in which it searches for variables: Local, Enclosing function locals, Global, Built-in.'}]}]}
+
+## Return Values and Scope - Notes
+
+**I. The `return` Statement**
+
+*   **Purpose:**
+    *   Exits the function.
+    *   Optionally returns a value to the caller.
+*   **Behavior:**
+    *   `return value`:  Returns the specified `value` to where the function was called.
+    *   `return`:  Returns `None` (implicitly) to the caller.
+    *   No `return` statement: Function implicitly returns `None`.
+
+**II. Returning Multiple Values**
+
+*   **Mechanism:** Python allows returning multiple values as a `tuple`.
+*   **Example:**
+    ```python
+    def my_function():
+        return 1, "hello", True
+
+    x, y, z = my_function()  # x = 1, y = "hello", z = True
+    result = my_function()  # result = (1, "hello", True)
+    ```
+
+**III. Variable Scope**
+
+*   **Definition:**  Determines the region of a program where a variable is accessible.
+
+*   **A. Local Scope**
+    *   **Location:** Inside a function.
+    *   **Accessibility:** Only accessible within that specific function.
+    *   **Lifetime:** Variables are created when the function is called and destroyed when the function returns.
+
+*   **B. Global Scope**
+    *   **Location:** Outside of any function (at the top level of the module).
+    *   **Accessibility:** Accessible throughout the entire program (within the module where it's defined and potentially in other modules if imported).
+    *   **Caution:** Excessive use of global variables can make code harder to understand and maintain.
+
+*   **C. LEGB Rule**
+    *   **Definition:** A hierarchy Python uses to resolve variable names.  It searches for a variable in this order:
+        1.  **L**ocal: Variables defined in the current function.
+        2.  **E**nclosing function locals: Variables defined in any enclosing functions (if the current function is nested).
+        3.  **G**lobal: Variables defined at the top level of the module.
+        4.  **B**uilt-in: Predefined names in the Python language (e.g., `print`, `len`, `True`).
+    *   **Example:**
+        ```python
+        x = 10  # Global
+
+        def outer_function():
+            y = 20  # Enclosing function local
+
+            def inner_function():
+                z = 30  # Local
+                print(x, y, z)  # Accesses global x, enclosing y, and local z
+
+            inner_function()
+
+        outer_function()  # Output: 10 20 30
+
+        ```
+    *   **`global` keyword:** Used within a function to modify a global variable directly.  Without `global`, assigning to a variable with the same name as a global variable creates a *new* local variable, shadowing the global one.
+
+        ```python
+        x = 10
+
+        def change_global():
+            global x  # Indicate we want to modify the global x
+            x = 5
+
+        change_global()
+        print(x)  # Output: 5
+        ```
+
+
+## {'name': 'Lambda Functions (Anonymous Functions)', 'subtopics': [{'name': 'Syntax', 'subsubtopics': [{'name': '`lambda arguments: expression`'}]}, {'name': 'Use Cases', 'subsubtopics': [{'name': 'Often used with functions like `map()`, `filter()`, and `sorted()`.'}]}]}
+
+Okay, here are notes on Lambda Functions (Anonymous Functions), broken down by syntax and use cases:
+
+## Lambda Functions (Anonymous Functions)
+
+*   **Definition:** Small, anonymous, single-expression functions. They don't require a `def` keyword or a function name.
+
+### Syntax
+
+*   **General Form:**  `lambda arguments: expression`
+    *   `lambda`: Keyword indicating the start of a lambda function.
+    *   `arguments`: Comma-separated list of input arguments (like a regular function).  Can be zero or more arguments.
+    *   `: ` Colon separates arguments from the expression.
+    *   `expression`:  A single expression that is evaluated and returned.  Implicit return - no `return` keyword needed. **Crucially, it must be an *expression*, not a statement.** (e.g., no `if`, `for`, `while` statements directly inside the lambda).
+*   **Example:** `lambda x: x * 2`  (takes one argument 'x' and returns its double)
+*   **Key Limitations:**
+    *   Single Expression:  Lambda functions are limited to a single expression.  More complex logic requires a regular function defined with `def`.
+    *   No Statements:  Cannot contain statements like `return`, `pass`, `del`, `assert`, etc.
+
+### Use Cases
+
+*   **Common Application:** Primarily used in situations where a small, throwaway function is needed for a short period of time. This avoids the need to formally define a function with `def`.
+*   **Higher-Order Functions:**  Frequently used as arguments to higher-order functions (functions that take other functions as arguments or return them).  This is where they shine.
+
+    *   **`map()`:** Applies a function to each item in an iterable (e.g., a list) and returns a map object (which you can convert to a list, tuple, etc.).  Lambda is often used to define the function to apply.
+        *   `map(lambda x: x**2, my_list)`  (Squares each element in `my_list`)
+    *   **`filter()`:** Creates a new iterable with elements that satisfy a given condition (defined by a function). Lambda is often used to define the condition.
+        *   `filter(lambda x: x > 10, my_list)`  (Keeps only elements in `my_list` that are greater than 10)
+    *   **`sorted()`:**  Returns a new sorted list from the items in an iterable. The `key` argument can accept a lambda function to customize the sorting.
+        *   `sorted(my_list, key=lambda x: abs(x))` (Sorts `my_list` by the absolute value of each element)
+
+*   **Example Scenario:**  Imagine sorting a list of tuples based on the second element of each tuple.  A lambda function would be perfect as the `key` argument for `sorted()`.
+
+**In Summary:** Lambda functions provide a concise way to create small, anonymous functions, especially useful when working with higher-order functions and when a named function is unnecessary.

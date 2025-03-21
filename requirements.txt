@@ -7,3 +7,4 @@ python-dotenv
 llama-cpp-python
 google-genai
 azure-ai-openai
+streamlit

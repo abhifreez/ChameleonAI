@@ -1,0 +1,86 @@
+- {'name': 'Object-Oriented Programming (OOP) in Java', 'subtopics': [{'name': 'Objects and Classes', 'subsubtopics': [{'name': 'Class as a blueprint for creating objects'}, {'name': 'Object as an instance of a class'}, {'name': 'Real-time examples of classes and objects'}]}, {'name': 'Encapsulation', 'subsubtopics': [{'name': 'Bundling data (attributes) and methods within a class'}, {'name': 'Hiding internal state and exposing through interfaces (getters/setters)'}, {'name': 'Protecting data from accidental modification'}, {'name': 'Real-time example of BankAccount class'}]}, {'name': 'Inheritance', 'subsubtopics': [{'name': 'Mechanism where a subclass inherits properties and methods from a superclass'}, {'name': "Promoting code reusability and establishing an 'is-a' relationship"}, {'name': 'Real-time example of Animal and Dog classes'}]}, {'name': 'Polymorphism', 'subsubtopics': [{'name': 'Ability of an object to take on many forms'}, {'name': 'Method overriding (runtime polymorphism)'}, {'name': 'Method overloading (compile-time polymorphism)'}, {'name': 'Writing generic code that works with different classes uniformly'}, {'name': 'Real-time example of Shape, Circle, Square, and Triangle classes'}]}]}
+
+## {'name': 'Object-Oriented Programming (OOP) in Java', 'subtopics': [{'name': 'Objects and Classes', 'subsubtopics': [{'name': 'Class as a blueprint for creating objects'}, {'name': 'Object as an instance of a class'}, {'name': 'Real-time examples of classes and objects'}]}, {'name': 'Encapsulation', 'subsubtopics': [{'name': 'Bundling data (attributes) and methods within a class'}, {'name': 'Hiding internal state and exposing through interfaces (getters/setters)'}, {'name': 'Protecting data from accidental modification'}, {'name': 'Real-time example of BankAccount class'}]}, {'name': 'Inheritance', 'subsubtopics': [{'name': 'Mechanism where a subclass inherits properties and methods from a superclass'}, {'name': "Promoting code reusability and establishing an 'is-a' relationship"}, {'name': 'Real-time example of Animal and Dog classes'}]}, {'name': 'Polymorphism', 'subsubtopics': [{'name': 'Ability of an object to take on many forms'}, {'name': 'Method overriding (runtime polymorphism)'}, {'name': 'Method overloading (compile-time polymorphism)'}, {'name': 'Writing generic code that works with different classes uniformly'}, {'name': 'Real-time example of Shape, Circle, Square, and Triangle classes'}]}]}
+
+## Object-Oriented Programming (OOP) in Java
+
+**Core Idea:** OOP is a programming paradigm based on the concept of "objects," which contain data (attributes) and code (methods) that operate on that data. Key principles include Encapsulation, Inheritance, and Polymorphism.
+
+---
+
+### 1. Objects and Classes
+
+*   **Class as a blueprint for creating objects:**
+    *   A class is a template or blueprint that defines the characteristics (attributes) and behaviors (methods) of objects of that type.
+    *   It doesn't consume memory; it's just a definition.
+    *   Analogy: A house blueprint.
+*   **Object as an instance of a class:**
+    *   An object is a specific instance of a class.
+    *   It occupies memory and holds the values for the attributes defined in the class.
+    *   Analogy: An actual house built from the blueprint.
+*   **Real-time examples of classes and objects:**
+    *   **Class:** `Car` (attributes: `color`, `model`, `speed`; methods: `accelerate()`, `brake()`, `turn()`)
+    *   **Objects:** `myCar` (a red Toyota Corolla), `yourCar` (a blue Honda Civic).  Each has its own values for `color`, `model`, and `speed`, but share the same methods defined in the `Car` class.
+    *   **Class:** `Student` (attributes: `name`, `studentID`, `major`; methods: `enroll()`, `dropCourse()`, `getGPA()`)
+    *   **Objects:** `john` (a student with ID 123 and major CS), `jane` (a student with ID 456 and major Biology).
+
+---
+
+### 2. Encapsulation
+
+*   **Bundling data (attributes) and methods within a class:**
+    *   Groups related data and functions that operate on that data into a single unit (the class).
+    *   Promotes modularity and organization.
+*   **Hiding internal state and exposing through interfaces (getters/setters):**
+    *   "Information Hiding": Protecting the internal representation of an object from direct access or modification from outside the class.
+    *   Access to attributes is controlled through `getter` (accessor) methods to retrieve the value and `setter` (mutator) methods to modify the value.
+    *   This allows you to control how the data is accessed and modified, adding validation logic if needed.
+*   **Protecting data from accidental modification:**
+    *   Prevents unintended changes to the object's state, ensuring data integrity.
+    *   Enforces data consistency.
+*   **Real-time example of BankAccount class:**
+    *   **Class:** `BankAccount` (attributes: `accountNumber`, `balance`; methods: `deposit()`, `withdraw()`, `getBalance()`)
+    *   `balance` is typically a private attribute.
+    *   `getBalance()` is a getter method to retrieve the balance.
+    *   `deposit()` and `withdraw()` are methods to modify the balance, potentially with validation (e.g., checking for sufficient funds before withdrawal).
+    *   We wouldn't directly access `account.balance = -100;` (if `balance` is private). We'd use `account.withdraw(100)` which might have logic to check for overdrafts.
+
+---
+
+### 3. Inheritance
+
+*   **Mechanism where a subclass inherits properties and methods from a superclass:**
+    *   A subclass (child class or derived class) inherits the attributes and methods of a superclass (parent class or base class).
+    *   Keyword: `extends` (e.g., `class Dog extends Animal`)
+*   **Promoting code reusability and establishing an 'is-a' relationship:**
+    *   Reduces code duplication by allowing subclasses to reuse code from the superclass.
+    *   Establishes an "is-a" relationship (e.g., a Dog *is a* Animal).
+*   **Real-time example of Animal and Dog classes:**
+    *   **Superclass:** `Animal` (attributes: `name`, `species`; methods: `eat()`, `sleep()`, `makeSound()`)
+    *   **Subclass:** `Dog` (inherits `name`, `species`, `eat()`, `sleep()`; overrides `makeSound()` to "Woof!"; adds `bark()`, `fetch()`).
+    *   `Dog` *is-a* `Animal`.  A `Dog` object has all the characteristics of an `Animal` plus its own specific behaviors.
+    *   Other subclasses could be `Cat`, `Bird`, etc., all inheriting from `Animal`.
+
+---
+
+### 4. Polymorphism
+
+*   **Ability of an object to take on many forms:**
+    *   Allows objects of different classes to be treated as objects of a common type (usually the superclass).
+    *   "Many forms" refers to the ability to call the correct method based on the actual object type at runtime.
+*   **Method overriding (runtime polymorphism):**
+    *   A subclass provides a specific implementation of a method that is already defined in its superclass.
+    *   The `@Override` annotation is used to indicate that a method is being overridden.
+    *   Which method is called is determined at runtime based on the *actual* type of the object.  This is also known as dynamic binding or late binding.
+*   **Method overloading (compile-time polymorphism):**
+    *   Defining multiple methods in the same class with the same name but different parameters (different number, types, or order of parameters).
+    *   The compiler determines which overloaded method to call based on the arguments passed to the method. This is also known as static binding or early binding.
+*   **Writing generic code that works with different classes uniformly:**
+    *   Polymorphism enables writing code that can work with objects of different classes as long as they share a common interface or inheritance hierarchy.
+    *   Example:  A list of `Animal` objects can contain `Dog`, `Cat`, and `Bird` objects, and you can call `makeSound()` on each object without knowing its specific type.  The correct `makeSound()` method for each object will be called at runtime.
+*   **Real-time example of Shape, Circle, Square, and Triangle classes:**
+    *   **Superclass:** `Shape` (abstract class; abstract method: `calculateArea()`)
+    *   **Subclasses:** `Circle`, `Square`, `Triangle` (each *must* implement `calculateArea()` with its specific formula).
+    *   You can create an array of `Shape` objects: `Shape[] shapes = {new Circle(5), new Square(4), new Triangle(3, 6)};`
+    *   You can then iterate through the array and call `shapes[i].calculateArea()`, and the correct area calculation will be performed for each shape based on its type.
+    *  This allows you to treat all shapes uniformly as `Shape` objects while still executing their specific area calculation logic.

@@ -4,12 +4,12 @@ from models.base_model import BaseLLM
 import os
 import re
 from dotenv import load_dotenv
+from transformers import pipeline
 
 
 load_dotenv()
 
-model_path=os.getenv("LOCAL_MODEL_DEEPSEEK")
-
+model_path = os.getenv("LOCAL_MODEL_GEMMA3")
 def extract_response(message):
     content = message.get("content", "")
     # Remove everything between <think> and </think> including the tags
@@ -21,24 +21,33 @@ message = {"content": "<think>ss</think>shgashdhsh"}
 clean_output = extract_response(message)
 print(clean_output)  # Output: "shgashdhsh"
 
-class DeepSeek(BaseLLM):
+class Gemma3(BaseLLM):
     def __init__(self):
         
 
+  
+
+     # Load model directly
+
+
+        pipe = pipeline("image-text-to-text", model="google/gemma-3-4b-it")
+
+
+
         #MODEL_PATH = "/Users/abhinavagarwal/Documents/Models/lmstudio-community/DeepSeek-R1-Distill-Qwen-7B-GGUF/DeepSeek-R1-Distill-Qwen-7B-Q4_K_M.gguf"
-        MODEL_PATH = model_path
+        # MODEL_PATH = model_path
 
-        if not os.path.exists(MODEL_PATH):
-            raise FileNotFoundError(f"Model file not found at {MODEL_PATH}")
+        # if not os.path.exists(MODEL_PATH):
+        #     raise FileNotFoundError(f"Model file not found at {MODEL_PATH}")
 
-        self.model= Llama(
-            model_path=MODEL_PATH,
-            n_gpu_layers=80,  # Utilize GPU for better performance (Mac Metal supported)
-            n_ctx=2048*3,  # Context window size
-            n_threads=8,  # Optimize for Apple M1/M2/M3 CPU threads
-            n_batch = 1024,
-            use_mlock = True
-        )
+        # self.model= Llama(
+        #     model_path=MODEL_PATH,
+        #     n_gpu_layers=80,  # Utilize GPU for better performance (Mac Metal supported)
+        #     n_ctx=2048*3,  # Context window size
+        #     n_threads=8,  # Optimize for Apple M1/M2/M3 CPU threads
+        #     n_batch = 1024,
+        #     use_mlock = True
+        # )
 
     def format_prompt(self, system_prompt, user_prompt):
         return [
