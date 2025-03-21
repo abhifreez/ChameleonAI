@@ -143,11 +143,16 @@ def download_file(filename):
     """Download a generated file."""
     try:
         directory = "generated_content"
-        return send_file(
+        response = send_file(
             os.path.join(directory, filename),
             as_attachment=True,
             download_name=filename
         )
+        # Add headers to prevent caching
+        response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0, max-age=0'
+        response.headers['Pragma'] = 'no-cache'
+        response.headers['Expires'] = '-1'
+        return response
     except Exception as e:
         return jsonify({"error": f"File not found: {str(e)}"}), 404
 
