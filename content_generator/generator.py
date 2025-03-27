@@ -178,7 +178,7 @@ class ContentGenerator:
         # Step 1: Generate lecture structure
         self._update_progress("Generating lecture structure", 0.1)
         lecture_details = self._generate_lecture_detail(lecture_title, topics)
-        lecture_details_file = self._write_text_to_file(lecture_details)
+        lecture_details_file = self._write_text_to_file(lecture_details,"lecture_details")
         
         
         # Step 2: Generate PPT structure
@@ -191,7 +191,7 @@ class ContentGenerator:
         self._update_progress("Extracting topics", 0.5)
         notes = self._generate_notes(lecture_details)
         print(f"Final Notes:\n{notes}")
-        notes_file = self._write_text_to_file(notes)
+        notes_file = self._write_text_to_file(notes,"notes")
 
         
         self._update_progress("Completed", 1.0)
@@ -202,7 +202,7 @@ class ContentGenerator:
         """Returns list of available models that can be used"""
         return ModelFactory.get_available_models() 
     
-    def _write_text_to_file(self, text: str) -> str:
+    def _write_text_to_file(self, text: str,name:str) -> str:
         """Write text to a file with a timestamped filename and return the file URL"""
         import os
         from datetime import datetime
@@ -214,7 +214,7 @@ class ContentGenerator:
 
         # Generate timestamped filename
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        filename = f"{directory}/{timestamp}_details.txt"
+        filename = f"{directory}/{timestamp}_{name}.txt"
 
         # Write text to file
         with open(filename, 'w') as file:
