@@ -6,6 +6,8 @@ import requests
 import hmac
 import base64
 from datetime import timedelta
+from mcp_utils import MCPClient
+# from mcp_component import render_mcp_interface
 
 # Set page config
 st.set_page_config(
@@ -21,8 +23,12 @@ credentials = {
     "user2": "password456"
 }
 
+mcp_client = MCPClient()
+
+
 def check_password():
     """Returns `True` if the user had a correct password."""
+   
 
     # Check if the user is already authenticated
     if st.session_state.get('authenticated'):
@@ -332,7 +338,7 @@ if check_password():
         # Content type selection
         content_type = st.selectbox(
             "Select Content Type",
-            ["Lecture Content"]
+            ["Lecture Content", "General Content", "MCP Interface"]
         )
         
         # Add lecture content input fields when Lecture Content is selected
@@ -376,59 +382,66 @@ if check_password():
             if "authenticated" in st.query_params:
                 del st.query_params["authenticated"]
             st.rerun()
-    # Main chat interface
-    st.title(f"Chat with ChameleonAI - Welcome {st.session_state.username}!")
 
-    # Create main content container
-    main_content = st.container()
-    with main_content:
-        # Messages container
-        messages_container = st.container()
-        with messages_container:
-            # Display chat messages
-            for message in st.session_state.messages:
-                with st.chat_message(message["role"]):
-                    st.markdown(message["content"], unsafe_allow_html=True)
+    # In your main content area, add this condition
+    if content_type == "MCP Interface":
+        #render_mcp_interface()
+        mcp_client.connect_to_server(server_script_path="mcp_server/server.py")
+        print("MCP Interface")
+    else:
+        # Main chat interface
+        st.title(f"Chat with ChameleonAI - Welcome {st.session_state.username}!")
+
+        # Create main content container
+        main_content = st.container()
+        with main_content:
+            # Messages container
+            messages_container = st.container()
+            with messages_container:
+                # Display chat messages
+                for message in st.session_state.messages:
+                    with st.chat_message(message["role"]):
+                        st.markdown(message["content"], unsafe_allow_html=True)
+                
+                # Add Clear Chat button after messages if there are any
+                if st.session_state.messages:
+                    if st.button("🗑️ Clear Chat", help="Remove all chat messages"):
+                        st.session_state.messages = []
+                        st.rerun()
             
-            # Add Clear Chat button after messages if there are any
-            if st.session_state.messages:
-                if st.button("🗑️ Clear Chat", help="Remove all chat messages"):
-                    st.session_state.messages = []
-                    st.rerun()
-        
-        # Add some spacing before the input
-        st.markdown("<div style='height: 100px'></div>", unsafe_allow_html=True)
-        
-        # Chat input container (always at the bottom)
-        input_container = st.container()
-        with input_container:
-            # Only show chat input for General Content
-            if content_type == "General Content":
-                if prompt := st.chat_input("What would you like to generate?"):
-                    # Add user message to chat history
-                    st.session_state.messages.append({"role": "user", "content": prompt})
-                    
-                    # Display user message
-                    with st.chat_message("user"):
-                        st.markdown(prompt)
-                    
-                    # Display assistant message
-                    with st.chat_message("assistant"):
-                        with st.spinner("Generating response..."):
-                            response = generate_content(prompt)
-                            formatted_response = format_response(response)
-                            st.markdown(formatted_response, unsafe_allow_html=True)
-                            st.session_state.messages.append({"role": "assistant", "content": formatted_response})
+            # Add some spacing before the input
+            st.markdown("<div style='height: 100px'></div>", unsafe_allow_html=True)
+            
+            # Chat input container (always at the bottom)
+            input_container = st.container()
+            with input_container:
+                # Only show chat input for General Content
+                if content_type == "General Content":
+                    if prompt := st.chat_input("What would you like to generate?"):
+                        # Add user message to chat history
+                        st.session_state.messages.append({"role": "user", "content": prompt})
+                        
+                        # Display user message
+                        with st.chat_message("user"):
+                            st.markdown(prompt)
+                        
+                        # Display assistant message
+                        with st.chat_message("assistant"):
+                            with st.spinner("Generating response..."):
+                                response = generate_content(prompt)
+                                formatted_response = format_response(response)
+                                st.markdown(formatted_response, unsafe_allow_html=True)
+                                st.session_state.messages.append({"role": "assistant", "content": formatted_response})
 
-    # Add a download button for chat history
-    if st.session_state.messages:
-        chat_history = json.dumps(st.session_state.messages, indent=2)
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        filename = f"chat_history_{timestamp}.json"
-        
-        # st.download_button(
-        #     label="Download Chat History",
-        #     data=chat_history,
-        #     file_name=filename,
-        #     mime="application/json"
-        # ) 
+        # Add a download button for chat history
+        if st.session_state.messages:
+            chat_history = json.dumps(st.session_state.messages, indent=2)
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            filename = f"chat_history_{timestamp}.json"
+            
+            # st.download_button(
+            #     label="Download Chat History",
+            #     data=chat_history,
+            #     file_name=filename,
+            #     mime="application/json"
+            # ) 
