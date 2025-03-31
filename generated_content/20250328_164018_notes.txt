@@ -1,0 +1,229 @@
+- Object-Oriented Programming (OOP)
+- Core OOP Principles
+
+## Object-Oriented Programming (OOP)
+
+```markdown
+## Object-Oriented Programming (OOP) in Java: Concise Notes
+
+**Concept Explanation:**
+
+Object-Oriented Programming (OOP) is a programming paradigm centered around the concept of "objects." An object is a self-contained entity that bundles together data (attributes or fields) and behavior (methods). Think of it like a real-world object. A car, for example, has attributes like color and model, and behaviors like accelerating and braking.
+
+Key principles of OOP in Java:
+
+*   **Encapsulation:** Bundling data and methods that operate on that data within a class and protecting the data from direct external access.  This is achieved using access modifiers like `private`, `public`, and `protected`. It promotes data hiding and security.
+
+*   **Abstraction:**  Showing only essential information about an object and hiding complex implementation details. Think of a TV remote – you only need to know the buttons to use it, not how the internal electronics work. In Java, interfaces and abstract classes help achieve abstraction.
+
+*   **Inheritance:**  A mechanism where a new class (subclass or derived class) can inherit properties and behaviors from an existing class (superclass or base class). This promotes code reuse and reduces redundancy.  Think of a "SportsCar" inheriting from a "Car" class.
+
+*   **Polymorphism:**  The ability of an object to take on many forms.  This allows you to write code that can work with objects of different classes in a uniform way. Java supports polymorphism through method overloading and method overriding.
+
+**Real-World Example:**
+
+Imagine designing software for a zoo.
+
+*   **Objects:** `Animal`, `Lion`, `Elephant`, `Zookeeper`, `Cage`
+*   **Encapsulation:** The `Animal` class might have a `name` and `age` (attributes) and a `eat()` method (behavior).  The `name` attribute could be made `private` so it can only be accessed/modified using the `Animal` class's own methods.
+*   **Abstraction:**  When interacting with a `Lion` object, you might only need to know its name and what food it needs, without knowing exactly *how* it digests the food.
+*   **Inheritance:** `Lion` and `Elephant` could *inherit* from the `Animal` class, inheriting common attributes and methods (like `name`, `age`, and `eat()`) but adding their own specific attributes (like `maneColor` for `Lion`) and methods (like `roar()` for `Lion`).
+*   **Polymorphism:** You could have an array of `Animal` objects that contains both `Lion` and `Elephant` objects.  When you call the `eat()` method on each element of the array, each animal would eat in its own specific way.
+
+**Code Snippet (Java):**
+
+```java
+// Example of Inheritance and Encapsulation
+
+class Animal {  //Base class
+    private String name; // Encapsulation: private attribute
+
+    public Animal(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void eat() {
+        System.out.println("Animal is eating...");
+    }
+}
+
+class Lion extends Animal {  //Lion is a subclass of Animal
+    public Lion(String name) {
+        super(name); // Calling the constructor of the superclass
+    }
+
+    @Override  //Method Overriding: Polymorphism
+    public void eat() {
+        System.out.println(getName() + " the Lion is eating meat...");
+    }
+
+    public void roar() {
+        System.out.println("Roar!");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Lion simba = new Lion("Simba");
+        simba.eat(); // Output: Simba the Lion is eating meat...
+        simba.roar(); // Output: Roar!
+
+        Animal animal = new Animal("Generic Animal");
+        animal.eat(); //Output: Animal is eating...
+
+        Animal myAnimal = new Lion("myLion"); // Polymorphism, an animal can be a Lion
+        myAnimal.eat(); // Output: myLion the Lion is eating meat...
+
+    }
+}
+```
+
+**Visual Workflow:**
+
+```
++---------------------+      +---------------------+
+|      Class           |----->|       Object        |
+|  (Blueprint)         |      |   (Instance)       |
++---------------------+      +---------------------+
+        ^                        ^
+        | (Inheritance)          | (Uses/Calls)
+        |                        |
++---------------------+      +---------------------+
+|    Subclass         |      |  Another Object  |
++---------------------+      +---------------------+
+```
+```mermaid
+graph LR
+A[Class (Blueprint)] --> B(Object (Instance))
+C[Subclass] -- Inheritance --> A
+B --> D(Another Object)
+```
+
+
+## Core OOP Principles
+
+```markdown
+## Core OOP Principles
+
+Object-Oriented Programming (OOP) is a programming paradigm built around the concept of "objects," which contain data (attributes) and code (methods) that operate on that data.  The core principles of OOP help structure code in a modular, reusable, and maintainable way.
+
+### 1. Encapsulation
+
+**Concept Explanation:** Encapsulation is the bundling of data (attributes) and methods that operate on that data within a single unit (object).  It also involves restricting direct access to some of the object's components (data hiding), making the internal state of an object accessible only through the object's methods. This protects the data from accidental modification and ensures data integrity. Think of it as a protective capsule around an object's internal workings.
+
+**Real-World Example:** A car.  The engine, gears, and other complex parts are all contained within the car's body.  You (the user) don't need to know exactly *how* the engine works, you just use the steering wheel, accelerator, and brakes (methods) to control the car. The internal components are "encapsulated," and you interact with them through a defined interface.
+
+**Code Snippet (Python):**
+
+```python
+class BankAccount:
+    def __init__(self, account_number, balance):
+        self.__account_number = account_number  # Private attribute (using name mangling)
+        self.__balance = balance
+
+    def deposit(self, amount):
+        if amount > 0:
+            self.__balance += amount
+            print(f"Deposited ${amount}. New balance: ${self.__balance}")
+        else:
+            print("Invalid deposit amount.")
+
+    def withdraw(self, amount):
+        if amount > 0 and amount <= self.__balance:
+            self.__balance -= amount
+            print(f"Withdrew ${amount}. New balance: ${self.__balance}")
+        else:
+            print("Insufficient funds or invalid amount.")
+
+    def get_balance(self):
+        return self.__balance # Access the balance through a method
+
+# Example Usage
+account = BankAccount("123456789", 1000)
+account.deposit(500)
+account.withdraw(200)
+print(account.get_balance()) # Access balance using the get_balance method
+# print(account.__balance)  # This would raise an AttributeError because it's "private"
+
+```
+
+### 2. Abstraction
+
+**Concept Explanation:** Abstraction is the process of simplifying complex reality by modeling classes based on their essential characteristics.  It involves hiding complex implementation details and showing only the necessary information to the user. In other words, showing "what" an object does, rather than "how" it does it.
+
+**Real-World Example:** A television.  You interact with it using a remote control to change channels, adjust volume, and turn it on/off.  You don't need to understand the intricate electronics inside to use it effectively. The internal complexity is "abstracted away," leaving you with a simple interface.
+
+**Visual Workflow:**
+
+```
+[User Interaction] --> [Simplified Interface (e.g., Remote Control)] --> [Abstraction Layer] --> [Complex Internal System]
+```
+
+### 3. Inheritance
+
+**Concept Explanation:** Inheritance is a mechanism where a new class (subclass or derived class) inherits properties and behaviors (attributes and methods) from an existing class (superclass or base class).  This promotes code reuse and establishes an "is-a" relationship between classes. For example, a `Dog` is a type of `Animal`.
+
+**Real-World Example:**  Different types of vehicles. A `Car`, a `Truck`, and a `Motorcycle` are all types of `Vehicle`. They all inherit general `Vehicle` properties like number of wheels, engine type, etc., but they also have their own specific properties (e.g., a `Truck` has a bed, a `Motorcycle` has handlebars).
+
+**Code Snippet (Python):**
+
+```python
+class Animal:  # Base class
+    def __init__(self, name):
+        self.name = name
+
+    def speak(self):
+        print("Generic animal sound")
+
+class Dog(Animal):  # Derived class
+    def __init__(self, name, breed):
+        super().__init__(name) #call the parent class's constructor
+        self.breed = breed
+
+    def speak(self):
+        print("Woof!")  # Overrides the base class's speak method
+
+# Example Usage
+animal = Animal("Generic Animal")
+animal.speak()  # Output: Generic animal sound
+
+dog = Dog("Buddy", "Golden Retriever")
+dog.speak()   # Output: Woof!
+print(dog.name)  # Inherited from Animal
+print(dog.breed) #Specific to the Dog class
+
+```
+
+### 4. Polymorphism
+
+**Concept Explanation:** Polymorphism means "many forms." In OOP, it refers to the ability of an object to take on many forms.  This can be achieved through method overriding (as shown in the Inheritance example) or method overloading (where multiple methods have the same name but different parameters).  Polymorphism allows you to write code that can work with objects of different classes in a uniform way.
+
+**Real-World Example:**  Different types of electronic devices (e.g., a smartphone, a laptop, a tablet) all have a "power on" button.  Each device implements the "power on" functionality differently, but you interact with them in a similar way (pressing the button). The same action ("power on") has different forms depending on the object.
+
+**Code Snippet (Python - demonstrating duck typing, a form of polymorphism):**
+
+```python
+class Duck:
+    def quack(self):
+        print("Quack!")
+
+class Person:
+    def quack(self):
+        print("The person imitates a duck.")
+
+def make_it_quack(animal):
+    animal.quack()  # We don't care if it's a real Duck object, just that it has a 'quack' method
+
+duck = Duck()
+person = Person()
+
+make_it_quack(duck)   # Output: Quack!
+make_it_quack(person) # Output: The person imitates a duck.
+```
+
+These four principles, Encapsulation, Abstraction, Inheritance, and Polymorphism, are fundamental to object-oriented programming and provide a powerful framework for designing and building complex software systems. They lead to more organized, maintainable, and reusable code.
+```
