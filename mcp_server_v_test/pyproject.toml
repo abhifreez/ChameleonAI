@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mcp-demo"
+version = "0.1.0"
+description = "MCP Server Demo"
+requires-python = ">=3.8"
+dependencies = [
+    "mcp-server",
+]

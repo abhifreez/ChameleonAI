@@ -7,6 +7,7 @@ import hmac
 import base64
 from datetime import timedelta
 from mcp_utils import MCPClient
+import asyncio
 # from mcp_component import render_mcp_interface
 
 # Set page config
@@ -386,7 +387,7 @@ if check_password():
     # In your main content area, add this condition
     if content_type == "MCP Interface":
         #render_mcp_interface()
-        mcp_client.connect_to_server(server_script_path="mcp_server/server.py")
+        asyncio.run(mcp_client.connect_to_server(server_script_path="mcp_server/server.py"))
         print("MCP Interface")
     else:
         # Main chat interface
