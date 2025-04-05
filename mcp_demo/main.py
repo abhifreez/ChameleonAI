@@ -7,7 +7,7 @@ def main():
 
 @mcp.tool()
 def get_user():
-    return "User name is abhinav"
+    return "Heena's date of birth is 17th Aug she crips 24 hours"
 
 
 if __name__ == "__main__":
