@@ -206,6 +206,23 @@ def generate_content(prompt, model_name="deepseek"):
         "Content-Type": "application/json"
     }
     
+    # Check if this is a hardware-related query based on content_type
+    if True:
+        try:
+            response = requests.post(f"{API_URL}/hardware-generator", headers=headers, json={
+                "model_name": model_name,
+                "user_prompt": prompt
+            })
+            response.raise_for_status()
+            return response.json()["response"]
+        except Exception as e:
+            return f"Error generating hardware content: {str(e)}"
+    """Send request to the content generation service"""
+    headers = {
+        "X-API-Key": API_KEY,
+        "Content-Type": "application/json"
+    }
+    
     data = {
         "model_name": model_name,
         "user_prompt": prompt,
@@ -338,7 +355,7 @@ if check_password():
         # Content type selection
         content_type = st.selectbox(
             "Select Content Type",
-            ["Lecture Content", "General Content", "MCP Interface"]
+            ["Lecture Content", "General Content", "MCP Interface", "Hardware Generator"]
         )
         
         # Add lecture content input fields when Lecture Content is selected
@@ -388,10 +405,24 @@ if check_password():
         #render_mcp_interface()
         mcp_client.connect_to_server(server_script_path="mcp_server/server.py")
         print("MCP Interface")
+
+    if content_type == "Hardware Generator":
+        st.title("Hardware Generator")
+       
     else:
         # Main chat interface
-        st.title(f"Chat with ChameleonAI - Welcome {st.session_state.username}!")
-
+        prompt = st.chat_input("What would you like to generate?")
+        col1, col2 = st.columns([4, 1])
+        with col1:
+            st.markdown(f"<h3>Welcome {st.session_state.username}!</h3>", unsafe_allow_html=True)
+        with col2:
+            click = st.button("🗑️ Clear Chat", help="Remove all chat messages")
+        if click:
+            st.session_state.messages = []
+            st.rerun()
+      
+            
+        
         # Create main content container
         main_content = st.container()
         with main_content:
@@ -403,21 +434,15 @@ if check_password():
                     with st.chat_message(message["role"]):
                         st.markdown(message["content"], unsafe_allow_html=True)
                 
-                # Add Clear Chat button after messages if there are any
-                if st.session_state.messages:
-                    if st.button("🗑️ Clear Chat", help="Remove all chat messages"):
-                        st.session_state.messages = []
-                        st.rerun()
-            
-            # Add some spacing before the input
-            st.markdown("<div style='height: 100px'></div>", unsafe_allow_html=True)
+
+         
             
             # Chat input container (always at the bottom)
             input_container = st.container()
             with input_container:
                 # Only show chat input for General Content
                 if content_type == "General Content":
-                    if prompt := st.chat_input("What would you like to generate?"):
+                    if prompt :
                         # Add user message to chat history
                         st.session_state.messages.append({"role": "user", "content": prompt})
                         

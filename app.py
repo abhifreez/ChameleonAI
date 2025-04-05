@@ -5,7 +5,7 @@ import os
 import json
 import re
 from content_generator import ContentGenerator
-
+from hardware.generator import HardwareGenerator
 # Load environment variables from .env file
 load_dotenv()
 
@@ -211,6 +211,26 @@ def get_available_models():
     """Endpoint to get list of available models"""
     return jsonify({
         "models": ContentGenerator.available_models()
+    })
+
+@app.route("/hardware-generator", methods=["POST"])
+def hardware_generator():
+    api_key = request.headers.get("X-API-Key")
+    if not api_key or not verify_api_key(api_key):
+        return jsonify({"error": "Invalid or missing API key"}), 403
+    data = request.json
+    model_name = "gemini-2.0-flash"
+    user_prompt = data.get("user_prompt")
+
+    if not model_name or not user_prompt:
+        return jsonify({"error": "Missing model_name or user_prompt"}), 400
+
+    generator = HardwareGenerator(model_name)
+    response_text = generator.answer_hardware_query(user_prompt)
+    
+    return jsonify({
+        "model": model_name,
+        "response": response_text
     })
 
 if __name__ == "__main__":
