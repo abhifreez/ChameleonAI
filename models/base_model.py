@@ -10,7 +10,15 @@ class BaseLLM(ABC):
         pass
 
     @abstractmethod
+    def format_prompt_messages(self, system_prompt, messages):
+        pass
+
+    @abstractmethod
     def generate_response(self, system_prompt, user_prompt):
+        pass
+
+    @abstractmethod
+    def generate_response_messages(self, system_prompt, messages):
         pass
 
 

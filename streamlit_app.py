@@ -200,25 +200,38 @@ button[data-testid="baseButton-header"] {
 API_URL = "http://127.0.0.1:5000"  # Update this with your actual API URL
 API_KEY = "9f8d1a2e-4c3b-4657-b29d-7e67c2a8f3d1"
 
-def generate_content(prompt, model_name="deepseek"):
+def generate_content(messages, model_name="deepseek"):
     """Send request to the content generation service"""
     headers = {
         "X-API-Key": API_KEY,
         "Content-Type": "application/json"
     }
     
-    data = {
-        "model_name": model_name,
-        "user_prompt": prompt,
-        "system_prompt": "You are a helpful AI assistant that generates high-quality content."
-    }
+    # Check if this is a hardware-related query based on content_type
+    # Check if this is a hardware-related query based on content_type
+    content_type = st.session_state.get("content_type", "general")
+    if "Hardware Generator" in content_type:
+        try:
+            response = requests.post(f"{API_URL}/hardware-generator", headers=headers, json={
+                "user_prompt": messages
+            })
+            response.raise_for_status()
+            return response.json()["response"]
+        except Exception as e:
+            return f"Error generating hardware content: {str(e)}"
     
-    try:
-        response = requests.post(f"{API_URL}/generate", headers=headers, json=data)
-        response.raise_for_status()
-        return response.json()["response"]
-    except Exception as e:
-        return f"Error generating content: {str(e)}"
+    # For general queries
+    elif "General Content" in content_type:
+        try:
+            response = requests.post(f"{API_URL}/general-chat", headers=headers, json={
+                "user_prompt": messages
+            })
+            response.raise_for_status()
+            return response.json()["response"]
+        except Exception as e:
+            return f"Error generating response: {str(e)}"
+
+   
 
 def generate_lecture_content(lecture_title, topics):
     """Generate lecture content using the lecture generation endpoint"""
@@ -339,9 +352,9 @@ if check_password():
         # Content type selection
         content_type = st.selectbox(
             "Select Content Type",
-            ["Lecture Content", "General Content", "MCP Interface"]
+            ["Lecture Content", "General Content", "MCP Interface", "Hardware Generator"]
         )
-        
+        st.session_state["content_type"] = content_type
         # Add lecture content input fields when Lecture Content is selected
         if content_type == "Lecture Content":
             st.markdown("### Lecture Details")
@@ -389,10 +402,21 @@ if check_password():
         #render_mcp_interface()
         asyncio.run(mcp_client.connect_to_server(server_script_path="mcp_server/server.py"))
         print("MCP Interface")
+       
     else:
         # Main chat interface
-        st.title(f"Chat with ChameleonAI - Welcome {st.session_state.username}!")
-
+        prompt = st.chat_input("What would you like to generate?")
+        col1, col2 = st.columns([4, 1])
+        with col1:
+            st.markdown(f"<h3>Welcome {st.session_state.username}!</h3>", unsafe_allow_html=True)
+        with col2:
+            click = st.button("🗑️ Clear Chat", help="Remove all chat messages")
+        if click:
+            st.session_state.messages = []
+            st.rerun()
+      
+            
+        
         # Create main content container
         main_content = st.container()
         with main_content:
@@ -404,21 +428,15 @@ if check_password():
                     with st.chat_message(message["role"]):
                         st.markdown(message["content"], unsafe_allow_html=True)
                 
-                # Add Clear Chat button after messages if there are any
-                if st.session_state.messages:
-                    if st.button("🗑️ Clear Chat", help="Remove all chat messages"):
-                        st.session_state.messages = []
-                        st.rerun()
-            
-            # Add some spacing before the input
-            st.markdown("<div style='height: 100px'></div>", unsafe_allow_html=True)
+
+         
             
             # Chat input container (always at the bottom)
             input_container = st.container()
             with input_container:
                 # Only show chat input for General Content
-                if content_type == "General Content":
-                    if prompt := st.chat_input("What would you like to generate?"):
+                if content_type != "Content Generator":
+                    if prompt :
                         # Add user message to chat history
                         st.session_state.messages.append({"role": "user", "content": prompt})
                         
@@ -429,7 +447,7 @@ if check_password():
                         # Display assistant message
                         with st.chat_message("assistant"):
                             with st.spinner("Generating response..."):
-                                response = generate_content(prompt)
+                                response = generate_content(st.session_state.messages)
                                 formatted_response = format_response(response)
                                 st.markdown(formatted_response, unsafe_allow_html=True)
                                 st.session_state.messages.append({"role": "assistant", "content": formatted_response})

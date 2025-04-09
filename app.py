@@ -5,7 +5,7 @@ import os
 import json
 import re
 from content_generator import ContentGenerator
-
+from hardware.generator import HardwareGenerator
 # Load environment variables from .env file
 load_dotenv()
 
@@ -15,7 +15,8 @@ app = Flask(__name__)
 
 API_KEY = os.getenv("API_KEY")
 
-ds_local_model = ModelFactory().get_model("deepseek")
+ds_local_model = None
+#ModelFactory().get_model("deepseek")
 
 def verify_api_key(api_key):
     """Check if the provided API key is valid."""
@@ -211,6 +212,49 @@ def get_available_models():
     """Endpoint to get list of available models"""
     return jsonify({
         "models": ContentGenerator.available_models()
+    })
+
+@app.route("/hardware-generator", methods=["POST"])
+def hardware_generator():
+    api_key = request.headers.get("X-API-Key")
+    if not api_key or not verify_api_key(api_key):
+        return jsonify({"error": "Invalid or missing API key"}), 403
+    data = request.json
+    model_name = "gemini-2.0-flash"
+    messages = data.get("user_prompt")
+
+    if not model_name or not messages:
+        return jsonify({"error": "Missing model_name or user_prompt"}), 400
+
+    generator = HardwareGenerator(model_name)
+    response_text = generator.answer_hardware_query(messages)
+    
+    return jsonify({
+        "model": model_name,
+        "response": response_text
+    })
+
+@app.route("/general-chat", methods=["POST"])
+def general_chat():
+    api_key = request.headers.get("X-API-Key")
+    if not api_key or not verify_api_key(api_key):
+        return jsonify({"error": "Invalid or missing API key"}), 403
+    data = request.json
+    model_name = "gemini-2.0-flash"
+    messages = data.get("user_prompt")
+
+    if not model_name or not messages:
+        return jsonify({"error": "Missing model_name or user_prompt"}), 400
+    
+    model = ModelFactory.get_model(model_name)
+    if not model:
+        return jsonify({"error": "Invalid model name"}), 400
+
+    response_text = model.generate_response("You are a helpful assistant.", messages)
+    
+    return jsonify({
+        "model": model_name,
+        "response": response_text
     })
 
 if __name__ == "__main__":
