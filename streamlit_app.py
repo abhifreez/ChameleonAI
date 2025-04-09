@@ -210,18 +210,10 @@ def generate_content(messages, model_name="deepseek"):
     # Check if this is a hardware-related query based on content_type
     # Check if this is a hardware-related query based on content_type
     content_type = st.session_state.get("content_type", "general")
-    if "Hardware Generator" in content_type:
-        try:
-            response = requests.post(f"{API_URL}/hardware-generator", headers=headers, json={
-                "user_prompt": messages
-            })
-            response.raise_for_status()
-            return response.json()["response"]
-        except Exception as e:
-            return f"Error generating hardware content: {str(e)}"
+ 
     
     # For general queries
-    elif "General Content" in content_type:
+    if "General Content" in content_type:
         try:
             response = requests.post(f"{API_URL}/general-chat", headers=headers, json={
                 "user_prompt": messages
@@ -352,7 +344,7 @@ if check_password():
         # Content type selection
         content_type = st.selectbox(
             "Select Content Type",
-            ["Lecture Content", "General Content", "MCP Interface", "Hardware Generator"]
+            ["Lecture Content", "General Content", "MCP Interface"]
         )
         st.session_state["content_type"] = content_type
         # Add lecture content input fields when Lecture Content is selected

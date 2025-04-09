@@ -1,0 +1,237 @@
+- Object-Oriented Programming (OOP)
+- Core Principles: Encapsulation, Inheritance, Polymorphism, Abstraction
+
+## Object-Oriented Programming (OOP)
+
+```markdown
+## Object-Oriented Programming (OOP) in Java
+
+**Detailed Concept Explanation:**
+
+Object-Oriented Programming (OOP) is a programming paradigm based on the concept of "objects", which contain data in the form of *fields* (attributes) and code in the form of *methods* (procedures).  OOP aims to model real-world entities and their interactions within a software system. The four core principles of OOP are:
+
+1.  **Encapsulation:** Bundling the data (attributes) and methods that operate on that data within a single unit (object). This helps in hiding internal implementation details and protecting data from unauthorized access.  Access is controlled through well-defined interfaces (methods).
+
+2.  **Abstraction:**  Simplifying complex reality by modeling classes appropriate to the problem, revealing only essential information about an object to the outside world and hiding unnecessary details.  Think of it as showing the "what" without revealing the "how."
+
+3.  **Inheritance:**  Creating new classes (child or derived classes) from existing classes (parent or base classes). The child class inherits the attributes and methods of the parent class, promoting code reusability and establishing "is-a" relationships (e.g., a `Dog` *is a* `Animal`).
+
+4.  **Polymorphism:** The ability of an object to take on many forms. It allows you to use a single interface to represent different underlying forms (data types).  This is often achieved through method overriding and interfaces.
+
+**Real-World Example:**
+
+Imagine designing software for a zoo. In an OOP approach:
+
+*   `Animal` could be a class with attributes like `name`, `species`, `age`, and methods like `eat()`, `sleep()`, `makeSound()`.
+*   `Lion` and `Elephant` could be subclasses inheriting from `Animal`. They inherit the basic attributes and methods but can override `makeSound()` to produce different sounds ("Roar" vs. "Trumpet").
+*   `ZooKeeper` could be a class with attributes like `name`, `employeeID`, and methods like `feedAnimal(Animal animal)`. This demonstrates how different objects interact.
+
+**Code Snippet:**
+
+```java
+// Example of a simple class in Java
+class Dog {
+    // Attributes (fields)
+    String name;
+    String breed;
+
+    // Constructor
+    public Dog(String name, String breed) {
+        this.name = name;
+        this.breed = breed;
+    }
+
+    // Method
+    public void bark() {
+        System.out.println("Woof!");
+    }
+
+    public static void main(String[] args) {
+        // Creating an object of the Dog class
+        Dog myDog = new Dog("Buddy", "Golden Retriever");
+        System.out.println("Dog's name: " + myDog.name);
+        myDog.bark(); // Calling the bark method
+    }
+}
+```
+
+**Visual Workflow:**
+
+```
+[User interacts with application] --> [Application uses Objects]
+[Objects] --> [Interact with each other by calling Methods]
+[Objects] --> [Contain Data (Attributes)]
+[Objects] --> [Based on Classes (Blueprints)]
+```
+```
+Class (Blueprint)
+  |
+  Creates Instances (Objects)
+  |
+  Object 1, Object 2, Object 3, ...
+```
+```
+Class Diagram:
+  +---------------------+
+  |       Animal        |
+  +---------------------+
+  | - name: String      |
+  | - age: int         |
+  +---------------------+
+  | + eat() : void      |
+  | + sleep() : void    |
+  | + makeSound() : void|
+  +---------------------+
+          ^
+          | (Inheritance)
+  +---------------------+
+  |        Dog          |
+  +---------------------+
+  | - breed: String     |
+  +---------------------+
+  | + makeSound(): void |
+  +---------------------+
+```
+```mermaid
+graph LR
+    A[User Interface] --> B(Object Interaction);
+    B --> C{Data Processing};
+    C --> D[Persistence (Optional)];
+    D --> C;
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style B fill:#ccf,stroke:#333,stroke-width:2px
+    style C fill:#ddf,stroke:#333,stroke-width:2px
+    style D fill:#eef,stroke:#333,stroke-width:2px
+```
+
+
+## Core Principles: Encapsulation, Inheritance, Polymorphism, Abstraction
+
+```markdown
+## Object-Oriented Programming (OOP) Core Principles
+
+OOP revolves around the idea of organizing software design around *objects*, which contain data (attributes) and code (methods) that operate on that data. The four core principles that underpin OOP are: Encapsulation, Inheritance, Polymorphism, and Abstraction.
+
+### 1. Encapsulation
+
+**Concept Explanation:**
+
+Encapsulation is the bundling of data (attributes) and methods that operate on that data into a single unit, or *class*. It also involves controlling access to the internal data of an object and hiding the internal implementation details from the outside world.  This is typically achieved through access modifiers (e.g., `private`, `protected`, `public`). The main goals are data protection and reducing complexity by isolating components.  It helps prevent accidental data corruption and makes the code easier to maintain and modify.
+
+**Real World Example:**
+
+Think of a car engine.  You, as the driver, don't need to know *how* the engine works internally (e.g., the intricate movements of pistons, valves, and camshafts). You interact with the engine through the steering wheel, accelerator, and brakes. The engine's internal workings are encapsulated, hiding the complexity and protecting the engine from misuse.
+
+**Code Snippet (Python):**
+
+```python
+class BankAccount:
+    def __init__(self, account_number, balance):
+        self.__account_number = account_number  # Private attribute
+        self.__balance = balance              # Private attribute
+
+    def deposit(self, amount):
+        if amount > 0:
+            self.__balance += amount
+        else:
+            print("Invalid deposit amount")
+
+    def withdraw(self, amount):
+        if 0 < amount <= self.__balance:
+            self.__balance -= amount
+        else:
+            print("Insufficient funds or invalid amount")
+
+    def get_balance(self):
+        return self.__balance  # Access via a public method
+```
+
+Here, `__account_number` and `__balance` are private attributes.  They can only be accessed and modified through the public methods `deposit`, `withdraw`, and `get_balance`, encapsulating the data.
+
+### 2. Inheritance
+
+**Concept Explanation:**
+
+Inheritance allows a new class (called a *subclass* or *derived class*) to inherit properties and behaviors (attributes and methods) from an existing class (called a *superclass* or *base class*). This promotes code reusability and establishes an "is-a" relationship between classes. For example, a `Dog` "is-a" `Animal`. The `Dog` class inherits the `Animal`'s properties like `name` and `age`, and can also have its own specific properties, like `breed`.
+
+**Real World Example:**
+
+Consider different types of vehicles: cars, trucks, and motorcycles. All are vehicles and thus share some common characteristics like having wheels, an engine, and the ability to transport people or goods. Inheritance allows us to define a base class `Vehicle` with these common properties and then create subclasses like `Car`, `Truck`, and `Motorcycle` that inherit these properties and add their own specific ones.
+
+**Code Snippet (Python):**
+
+```python
+class Animal:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def speak(self):
+        print("Generic animal sound")
+
+class Dog(Animal):  # Dog inherits from Animal
+    def __init__(self, name, age, breed):
+        super().__init__(name, age)  # Call the superclass's constructor
+        self.breed = breed
+
+    def speak(self):  # Override the speak method
+        print("Woof!")
+```
+
+The `Dog` class inherits the `name` and `age` attributes from the `Animal` class and overrides the `speak` method.
+
+### 3. Polymorphism
+
+**Concept Explanation:**
+
+Polymorphism means "many forms." In OOP, it refers to the ability of an object to take on many forms.  Specifically, it allows objects of different classes to be treated as objects of a common type (e.g., a base class). This can be achieved through method overriding (as seen in the Inheritance example) or method overloading (having multiple methods with the same name but different parameters - not directly supported in Python).
+
+**Real World Example:**
+
+Consider a `Shape` class with subclasses like `Circle`, `Square`, and `Triangle`. Each shape has a different way of calculating its area. Polymorphism allows you to call an `area()` method on any `Shape` object (whether it's a `Circle`, `Square`, or `Triangle`) and the correct area calculation will be performed, regardless of the object's specific type.
+
+**Code Snippet (Python):**
+
+```python
+class Animal:
+    def speak(self):
+        print("Generic animal sound")
+
+class Dog(Animal):
+    def speak(self):
+        print("Woof!")
+
+class Cat(Animal):
+    def speak(self):
+        print("Meow!")
+
+def animal_sound(animal):
+    animal.speak()  # Polymorphic call
+
+my_dog = Dog()
+my_cat = Cat()
+
+animal_sound(my_dog)  # Output: Woof!
+animal_sound(my_cat)  # Output: Meow!
+```
+
+The `animal_sound` function can accept any object of type `Animal` (or its subclasses) and call its `speak` method.  The specific `speak` method that is executed depends on the actual type of the object passed in, demonstrating polymorphism.
+
+### 4. Abstraction
+
+**Concept Explanation:**
+
+Abstraction involves simplifying complex reality by modeling classes based on essential characteristics, while hiding unnecessary implementation details. It focuses on *what* an object does rather than *how* it does it. Abstract classes and interfaces (not explicitly covered here, but related) are common mechanisms for achieving abstraction.  Abstraction helps manage complexity and create more maintainable and reusable code.
+
+**Real World Example:**
+
+When you use a microwave, you interact with a simplified interface: you set the time and power level, and press start. You don't need to understand the complex internal circuitry and electromagnetic processes that heat the food.  The microwave *abstracts* away these details, presenting you with a simple and easy-to-use interface.
+
+**Visual Workflow:**
+
+```
+[User Interacts with Object] --> [Object's Public Interface (Methods)] --> [Encapsulated Data & Implementation Details (Hidden)]
+```
+
+This shows how the user interacts only with the public methods provided by the object, while the internal data and implementation logic are hidden (abstracted away). This simplifies the user's experience and allows the internal implementation to change without affecting the external interface.
+```
