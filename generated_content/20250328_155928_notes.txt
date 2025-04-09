@@ -1,0 +1,270 @@
+- Object-Oriented Programming (OOP) in Java
+- Introduction to Object-Oriented Programming (OOP)
+- Core Principles of OOP in Java
+- Encapsulation
+
+## Object-Oriented Programming (OOP) in Java
+
+```markdown
+## Object-Oriented Programming (OOP) in Java
+
+**Definition:**
+
+Object-Oriented Programming (OOP) is a programming paradigm based on the concept of "objects," which contain data (attributes) and code (methods) that operate on that data. It's about structuring your code around real-world entities.  Think of it as a way to model problems using building blocks that have both properties and behaviors.
+
+**Real-world Example:**
+
+Imagine a "Car".
+
+*   **Attributes:** color, model, year, speed
+*   **Methods:** accelerate(), brake(), steer()
+
+In OOP, a car would be an object with these attributes and methods defined within it. You can then create multiple "Car" objects, each with its own set of attribute values (e.g., a red car from 2020, a blue car from 2023).
+
+**Code Snippet (Java):**
+
+```java
+public class Car {
+    String color;
+    String model;
+    int year;
+    int speed;
+
+    public void accelerate() {
+        speed += 10;
+        System.out.println("Accelerating. Current speed: " + speed);
+    }
+
+    public void brake() {
+        speed -= 10;
+        System.out.println("Braking. Current speed: " + speed);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Car myCar = new Car();
+        myCar.color = "Red";
+        myCar.model = "Sedan";
+        myCar.year = 2020;
+        myCar.speed = 0;
+
+        myCar.accelerate(); // Output: Accelerating. Current speed: 10
+        myCar.brake();      // Output: Braking. Current speed: 0
+    }
+}
+```
+
+**Visual Workflow:**
+
+```
+[Real-World Entity (e.g., Car)] --> [Abstraction (Defining Attributes & Methods)] --> [Class (Blueprint)] --> [Object (Instance of the Class)]
+```
+```markdown
+```
+
+## Introduction to Object-Oriented Programming (OOP)
+
+```markdown
+## Introduction to Object-Oriented Programming (OOP) in Java
+
+**Definition:**
+
+Object-Oriented Programming (OOP) is a programming paradigm based on the concept of "objects," which contain data (attributes) and code (methods) to manipulate that data. It emphasizes data abstraction, encapsulation, inheritance, and polymorphism to create modular, reusable, and maintainable code.  In essence, it's about modeling real-world entities and their interactions in code.
+
+**Real-World Example:**
+
+Think of a car.
+
+*   **Object:**  A Car
+*   **Attributes (Data):** Color, Model, Number of Doors, Current Speed
+*   **Methods (Code/Actions):**  Accelerate, Brake, Turn, Honk
+
+OOP allows you to represent this real-world car in your Java program by defining its attributes and methods, making the code easier to understand and manage.
+
+**Code Snippet (Java):**
+
+```java
+// Definition of a simple Car class
+class Car {
+    String color;
+    String model;
+    int speed;
+
+    // Constructor
+    public Car(String color, String model) {
+        this.color = color;
+        this.model = model;
+        this.speed = 0; //Initial Speed
+    }
+
+    // Method to accelerate the car
+    void accelerate(int increment) {
+        speed += increment;
+        System.out.println("The " + color + " " + model + " is accelerating. Speed: " + speed);
+    }
+
+    // Main method - demonstrating usage
+    public static void main(String[] args) {
+        Car myCar = new Car("Red", "Sedan");  // Creating a Car object
+        myCar.accelerate(20); // Calling the accelerate method
+    }
+}
+```
+
+**Visual Workflow:**
+
+```
+[Real-World Object] --> [Abstraction] --> [Class Definition (Attributes & Methods)] --> [Object Creation (Instance)] --> [Method Invocation (Behavior)]
+```
+```
+[Car] --> [Color, Model, Accelerate()] --> [class Car { ... }] --> [Car myCar = new Car();] --> [myCar.accelerate();]
+```
+```
+   (Abstraction & Representation)
+```
+
+
+## Core Principles of OOP in Java
+
+```markdown
+## Core Principles of Object-Oriented Programming (OOP) in Java
+
+OOP is a programming paradigm based on the concept of "objects," which contain data (fields) and code (methods) to manipulate that data. Java is built upon OOP principles. These are the core ideas:
+
+**Definition:** OOP is a programming approach that models real-world entities as objects, focusing on data and behavior. It emphasizes code reusability, modularity, and maintainability.
+
+**Core Principles:**
+
+1.  **Encapsulation:**  Bundling data and methods that operate on that data within a single unit (class). It hides internal implementation details and exposes only what's necessary. Think of it like a car; you can drive it (use its methods) without knowing exactly how the engine works (internal data and implementation).
+
+    *Example:* A `BankAccount` class might encapsulate `balance` (data) and `deposit()` and `withdraw()` (methods).
+
+2.  **Abstraction:**  Presenting only essential information to the user, hiding complex implementation details.  It's about showing the "what" and hiding the "how."
+
+    *Example:* Using a coffee machine. You only need to know how to press a button, not the internal heating process.
+
+3.  **Inheritance:**  Creating new classes (child/subclasses) from existing classes (parent/superclasses).  Subclasses inherit the properties and behaviors of the superclass, promoting code reuse.
+
+    *Example:* A `Dog` class inheriting from an `Animal` class. `Dog` automatically has `Animal`'s properties like `age` and `breed` but can also have its own specific properties like `barkVolume`.
+
+4.  **Polymorphism:**  The ability of an object to take on many forms.  It allows you to perform a single action in different ways. There are two types: Compile-time polymorphism (method overloading) and Run-time polymorphism (method overriding).
+
+    *Example:* A `Shape` class with a `draw()` method. `Circle`, `Square`, and `Triangle` classes can all inherit from `Shape` and override the `draw()` method to draw themselves specifically.
+
+**Real-world Example:**
+
+Imagine building a system for a library.
+
+*   **Objects:** Books, Members, Librarians.
+*   **Encapsulation:** A `Book` object encapsulates its `title`, `author`, and `ISBN`.
+*   **Abstraction:** A member interacts with a simplified interface to borrow a book, hiding the internal library management details.
+*   **Inheritance:** `FictionBook` and `NonFictionBook` classes inherit from the `Book` class, adding specific properties like `genre` or `subject`.
+*   **Polymorphism:** A `printDetails()` method can be used to print the details of any type of book (Fiction or Non-Fiction) differently.
+
+**Code Snippet (Illustrating Inheritance):**
+
+```java
+class Animal {
+    String name;
+
+    public void eat() {
+        System.out.println("Animal is eating");
+    }
+}
+
+class Dog extends Animal {
+    public void bark() {
+        System.out.println("Dog is barking");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Dog myDog = new Dog();
+        myDog.name = "Buddy";
+        myDog.eat(); // Inherited from Animal
+        myDog.bark(); // Dog specific method
+    }
+}
+```
+
+**Visual Workflow (Simplified - Interaction of objects):**
+
+```
+[User] --(Requests Borrowing)--> [Library System]
+[Library System] --(Interacts with)--> [Book Object]
+[Library System] --(Interacts with)--> [Member Object]
+[Library System] --(Updates Record)--> [Database]
+```
+```
+```
+
+## Encapsulation
+
+```markdown
+## Encapsulation in Java
+
+**Definition:** Encapsulation is the bundling of data (attributes/variables) and the methods (functions) that operate on that data into a single unit, called a class. It also involves restricting direct access to some of the object's components, preventing the data from being accessed or modified directly from outside the class. Think of it as data hiding.
+
+**Real-World Example:** Imagine a car engine.  All the complex parts and their workings are hidden under the hood. You, as the driver, only interact with the engine through the steering wheel, accelerator, and brake. You don't need to know how the engine internally works, just that these interfaces allow you to control it.  Encapsulation is like the car's hood, protecting the internal complexity and allowing controlled interaction.
+
+**Code Snippet:**
+
+```java
+public class BankAccount {
+  private double balance; // Private attribute - hidden from outside access
+
+  public BankAccount(double initialBalance) {
+    this.balance = initialBalance;
+  }
+
+  // Public method to deposit money - controlled access
+  public void deposit(double amount) {
+    if (amount > 0) {
+      balance += amount;
+    }
+  }
+
+  // Public method to withdraw money - controlled access
+  public void withdraw(double amount) {
+    if (amount > 0 && amount <= balance) {
+      balance -= amount;
+    }
+  }
+
+  // Public method to check the balance - controlled access
+  public double getBalance() {
+    return balance;
+  }
+}
+
+// Example usage
+public class Main {
+  public static void main(String[] args) {
+    BankAccount myAccount = new BankAccount(1000);
+    myAccount.deposit(500);
+    System.out.println("Balance: " + myAccount.getBalance()); // Output: Balance: 1500.0
+    // myAccount.balance = -500; // This would cause issues if direct access was allowed. It is prevented by encapsulation.
+  }
+}
+```
+
+**Visual Workflow:**
+
+```
++---------------------+      +----------------------+      +---------------------+
+|  Object (e.g., Car)  | ---> |   Public Interface   | ---> |  External World      |
+| (Data & Methods)    |      | (Methods to interact) |      | (Uses the Object)    |
++---------------------+      +----------------------+      +---------------------+
+          ^                      |
+          |                      |
+          |       (Access only  |
+          |        through     |
+          |      Interface)      |
+          |                      V
++---------------------+
+|   Private Data      |
+| (Hidden Details)     |
++---------------------+
+```

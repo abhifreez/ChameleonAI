@@ -50,32 +50,27 @@ class ContentGenerator:
         prompt = self._load_prompt("presentation_prompt.txt")
         ppt_structure = self.presentation_model.generate_response(prompt, lecture_detail)
         return ppt_structure
+    
+    def _get_subtopics(self, dict_topic: str) -> List[Dict]:
+
+        """
+        Extract subtopics from a topic dictionary
+        """
+        if isinstance(dict_topic, dict):
+            return dict_topic.get("subtopics", [])
+        return []
         
-    def _extract_important_topics(self, lecture_structure: str) -> List[Dict]:
+    def _extract_important_topics(self, lecture_title: str,topic_list:List[str]) -> List[Dict]:
         """
         Agent 3.1: Extract important topics from lecture structure
         Returns list of topics with their context
         """
         prompt = self._load_prompt("topic_extraction_prompt.txt")
-        topics_json = self.notes_model.generate_response(prompt, lecture_structure)
+        context_str = f"Lecture Title: {lecture_title}\n\nTopics:\n"
+        for topic in topic_list:
+            context_str += f"- {topic}\n"
+        topics_json = self.notes_model.generate_response(prompt, context_str)
       
-
-        # try:
-        #     # Handle different response formats
-        #     if isinstance(topics_json, list):
-        #         topics = topics_json
-        #     elif isinstance(topics_json, str):
-        #         # Clean the string of any markdown formatting
-        #         cleaned_json = topics_json.replace('```json', '').replace('```', '').strip()
-        #         topics = json.loads(cleaned_json)
-        #     else:
-        #         raise ValueError(f"Unexpected response type: {type(topics_json)}")
-           
-        #     # Validate the structure of each topic
-          
-        #     return topics
-        # except json.JSONDecodeError as e:
-        #     raise ValueError(f"Failed to parse topics from model output: {str(e)}")
         try:
             if isinstance(topics_json, list):
                 return topics_json
@@ -93,13 +88,16 @@ class ContentGenerator:
         except Exception as e:
             raise ValueError(f"Failed to parse important topics: {e}")
     
-    def _generate_topic_notes(self, topic: str, topic_json: str) -> str:
+    def _generate_topic_notes(self, topic: str, context: str) -> str:
         """
         Agent 3.2: Generates detailed notes for a specific topic
         """
+
+        print(f"Topic===>: {topic}")
         prompt = self._load_prompt("topic_notes_prompt.txt")
 
-        topic_note = self.notes_model.generate_response(prompt, topic_json)
+  
+        topic_note = self.notes_model.generate_response(prompt, "Please generate notes for the following topic: " + topic + " and the context of the topic is: " + context)
         formatted_note = f"\n\nTopic: {topic}\n\n{topic_note}\n\n"
        
 
@@ -116,30 +114,33 @@ class ContentGenerator:
             self._thread_local.model = self.model_factory.get_model(self.notes_model)
         return self._thread_local.model
         
-    def _generate_notes(self, lecture_structure: str) -> str:
+    def _generate_notes(self,lecture_title:str,subtopic_list:List[Dict]) -> str:
         """
         Agent 3: Generates detailed notes using a two-step process
         1. Extract important topics
         2. Generate detailed notes for each topic
         """
-        extracted_topics = self._extract_important_topics(lecture_structure)
-
+        extracted_topics = self._extract_important_topics(lecture_title,subtopic_list)
+        print(f"Extracted Topics: {extracted_topics}")
         all_notes = []
-        # if "topics" not in extracted_topics:
-        #     raise ValueError("Extracted topics do not contain 'topics' key")
-        # topics = extracted_topics["topics"]
-
-        # all_notes = []
-        # for topic in topics:
-        #     topic_json = json.dumps(topic)
-        #     # Generate notes for the main topic
-        #     all_notes.append(self._generate_topic_notes(topic, topic_json))
+       
         for topic in extracted_topics:
             topic_name = topic.get("name", "Untitled Topic")
             topic_json = json.dumps(topic, indent=2)
+            context = lecture_title
+            topic_note = self._generate_topic_notes(topic_name, context=context)
+            all_notes.append(topic_note)
             try:
-                topic_note = self._generate_topic_notes(topic_name, topic_json)
-                all_notes.append(topic_note)
+                subtopics = self._get_subtopics(topic)
+                for subtopic in subtopics:
+                    sub_topic_name= subtopic.get("name", "Untitled Subtopic")
+                    subtopic_note = self._generate_topic_notes(sub_topic_name,topic_name)
+                    all_notes.append(subtopic_note)
+                    for item in subtopic:
+                        sub_topic_name= item.get("name", "Untitled Subtopic")
+                        subtopic_note = self._generate_topic_notes(sub_topic_name,topic_name)
+                        all_notes.append(subtopic_note)
+               
             except Exception as e:
                 print(f"Error generating notes for topic '{topic_name}': {e}")
                 continue
@@ -147,6 +148,7 @@ class ContentGenerator:
         return self._format_combined_notes(all_notes, "Lecture Notes")
     
     def _format_combined_notes(self, topic_notes: List[Dict], title: str) -> str:
+    
         """Format all topic notes into a cohesive document"""
         header = ""
         toc = "\n".join([f"- {note['topic']}" for note in topic_notes])
@@ -175,27 +177,26 @@ class ContentGenerator:
         print("Inside generate_content function ------>")
         self._update_progress("Starting content generation", 0.0)
         
-        # Step 1: Generate lecture structure
-        self._update_progress("Generating lecture structure", 0.1)
-        lecture_details = self._generate_lecture_detail(lecture_title, topics)
-        lecture_details_file = self._write_text_to_file(lecture_details,"lecture_details")
+        # # Step 1: Generate lecture structure
+        # self._update_progress("Generating lecture structure", 0.1)
+        # lecture_details = self._generate_lecture_detail(lecture_title, topics)
+        # lecture_details_file = self._write_text_to_file(lecture_details,"lecture_details")
         
         
         # Step 2: Generate PPT structure
-        self._update_progress("Generating presentation structure", 0.3)
-        ppt_structure = self._generate_presentation(lecture_details)
-        ppt_structure = self._json_to_dict(ppt_structure)
+        # self._update_progress("Generating presentation structure", 0.3)
+        # ppt_structure = self._generate_presentation(lecture_details)
+        # ppt_structure = self._json_to_dict(ppt_structure)
         
 
         # Step 3: Generate detailed notes
         self._update_progress("Extracting topics", 0.5)
-        notes = self._generate_notes(lecture_details)
-        print(f"Final Notes:\n{notes}")
+        notes = self._generate_notes(lecture_title,topics)
         notes_file = self._write_text_to_file(notes,"notes")
 
         
         self._update_progress("Completed", 1.0)
-        return ppt_structure,lecture_details_file, notes_file
+        return "","", notes_file
 
     @classmethod
     def available_models(cls) -> List[str]:

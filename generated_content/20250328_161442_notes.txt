@@ -1,0 +1,140 @@
+- Object-Oriented Programming (OOP)
+- Objects
+
+## Object-Oriented Programming (OOP)
+
+```markdown
+## Object-Oriented Programming (OOP) in Java: Concise Notes
+
+**Concept Explanation:**
+
+Object-Oriented Programming (OOP) is a programming paradigm based on the concept of "objects", which contain data (fields/attributes) and code (methods) that operate on that data.  Think of it as modeling real-world entities and their interactions in code.  OOP aims to improve code organization, reusability, and maintainability by emphasizing modularity and abstraction.  Key principles include:
+
+*   **Encapsulation:** Bundling data and methods that operate on that data within a single unit (an object) and hiding the internal implementation details from the outside world. Think of it like a capsule containing medicine. You only know what it's for, not necessarily *how* it works inside. Java achieves encapsulation through access modifiers (private, public, protected, default).
+
+*   **Abstraction:**  Showing only the necessary information to the user and hiding the complex details. For example, when you drive a car, you only need to know how to steer, accelerate, and brake. You don't need to know the intricate details of the engine. In Java, abstraction can be achieved using abstract classes and interfaces.
+
+*   **Inheritance:** Creating new classes (child classes or subclasses) from existing classes (parent classes or superclasses).  The child class inherits the attributes and methods of the parent class, promoting code reuse and establishing a hierarchical relationship. Think of a "Dog" class inheriting from a "Animal" class.
+
+*   **Polymorphism:**  The ability of an object to take on many forms. In Java, this is often achieved through method overriding (providing a specific implementation of a method inherited from a parent class) and method overloading (having multiple methods with the same name but different parameters in the same class).  Think of a "print" method that can print different types of data (integer, string, etc.).
+
+**Real-World Example:**
+
+Imagine a "Car" object.
+
+*   **Data (Attributes):** color, model, speed, engine type.
+*   **Code (Methods):** accelerate(), brake(), steer(), honk().
+
+Other objects might interact with the "Car" object, but they don't necessarily need to know *how* the `accelerate()` method works internally.  They just call it. Inheritance could be demonstrated by having "SportsCar" inherit from "Car," adding its own specific attributes and methods (e.g., "spoiler," "turboBoost()").
+
+**Code Snippet (Java):**
+
+```java
+// Example of a simple class in Java
+class Dog {
+    // Attribute
+    String breed;
+
+    // Constructor
+    public Dog(String breed) {
+        this.breed = breed;
+    }
+
+    // Method
+    public void bark() {
+        System.out.println("Woof!");
+    }
+
+    public static void main(String[] args) {
+        Dog myDog = new Dog("Golden Retriever");
+        System.out.println("My dog is a " + myDog.breed);
+        myDog.bark();
+    }
+}
+```
+
+**Visual Workflow (Simplified):**
+
+```
++---------------------+    Inheritance    +---------------------+
+| Parent Class        |------------------->| Child Class         |
+| (e.g., Animal)      |                    | (e.g., Dog)           |
+|---------------------+                    |---------------------+
+| Attributes:         |                    | Attributes:           |
+| - name              |                    | - breed              |
+| - age               |                    | Methods:              |
+| Methods:            |                    | - bark()             |
+| - eat()             |                    |---------------------+
+| - sleep()           |                    |                      |
++---------------------+                    +---------------------+
+```
+
+
+## Objects
+
+```markdown
+## Objects in Object-Oriented Programming (OOP)
+
+**Concept Explanation:**
+
+In Object-Oriented Programming (OOP), an *object* is a fundamental concept that represents a real-world entity or a conceptual element. Think of it as a container that bundles together:
+
+*   **Data (Attributes/Properties):** Characteristics or information about the object. These describe the state of the object.
+*   **Behavior (Methods):** Actions or functions that the object can perform. These define what the object can *do*.
+
+Essentially, an object is an *instance* of a class. A class is like a blueprint, and an object is a concrete realization of that blueprint.  The goal of OOP is to model the world around us more naturally by grouping related data and behavior into self-contained units (objects).
+
+**Real-World Example:**
+
+Consider a `Car`.
+
+*   **Attributes (Data):**  `color`, `model`, `make`, `engine_size`, `current_speed`.
+*   **Methods (Behavior):**  `accelerate()`, `brake()`, `steer()`, `honk()`.
+
+A specific *instance* of a `Car` object might be a red Toyota Corolla with an engine size of 1.8L, currently traveling at 0 km/h. When you call the `accelerate()` method on *that* object, its `current_speed` attribute will change.
+
+**Code Snippet (Python):**
+
+```python
+class Car:  # Defining the class "Car" - our blueprint
+
+    def __init__(self, color, model, make, engine_size): #constructor to create objects
+        self.color = color
+        self.model = model
+        self.make = make
+        self.engine_size = engine_size
+        self.current_speed = 0
+
+    def accelerate(self, increment):
+        self.current_speed += increment
+        print(f"Accelerating! Current speed: {self.current_speed} km/h")
+
+    def brake(self, decrement):
+        self.current_speed -= decrement
+        if self.current_speed < 0:
+            self.current_speed = 0
+        print(f"Braking! Current speed: {self.current_speed} km/h")
+
+# Creating an object (an instance of the Car class)
+my_car = Car("red", "Corolla", "Toyota", 1.8)
+
+# Accessing attributes
+print(f"My car is a {my_car.color} {my_car.make} {my_car.model}.")
+
+# Calling a method
+my_car.accelerate(20)
+my_car.brake(5)
+```
+
+**Visual Workflow:**
+
+```
++---------------------+     +---------------------+     +---------------------+
+|    Class (Blueprint) | --> |    Object Instance   | --> |  Interaction/Change |
+|   e.g., Car        |     | e.g., my_car        |     |   e.g., accelerate() |
+|  (color, model,    |     | (red, Corolla,      |     |  modifies speed     |
+|   accelerate(),...)  |     | Toyota, 1.8, 0)     |     |                     |
++---------------------+     +---------------------+     +---------------------+
+  Definition of object       Concrete realization      Object state changes through
+  structure and behavior       of the blueprint          method calls
+```

@@ -1,11 +1,29 @@
-You have to get importnat topics and subtopics from the provided Lecture details, 
-the topic and subtopic you should should be relevent for students toprepare for exams and interview aaspec.
+You are given lecture content (title and topics). Your task is to extract all important topics and subtopics that are:
 
-Instruction:
-- Output Should be valid json
-- Double check that you have coverd all the topics
+Relevant for exams (conceptual clarity, definitions, problem-solving)
+Useful for interviews (practical application, coding, logic, system understanding)
+Make sure to:
 
+Capture all core and applied concepts
+Include both theoretical and coding-relevant subtopics
+Double-check that no major concept is missed
+Structure the output as valid, clean JSON (UTF-8, no comments, no trailing commas)
+
+What all we need to add :
+-> Comarison table (Can have various params)
+-> Why, What Pros cons , use cases
+-> FAQ ( Maximum two lines answer)
+-> Maximum tabularr structure format
+-> Industry related exapme help in problem solving
+-> Bulltes 
+-> Formmaing
+    -> American English
+    -> Formula should be well formatted
 
 
 Output Format:
-{"topics":[{"name":"<topic name>","subtopics":[{"name":"<subtopic name>","subsubtopics":[{"name":"<subsubtopic name>"}]}]}]}
+{"topics":[{"name":"<topic name>","subtopics":[{"name":"<name>"}]}]}
+
+Programming language 
+-> Need to ask from user
+- > Book References
